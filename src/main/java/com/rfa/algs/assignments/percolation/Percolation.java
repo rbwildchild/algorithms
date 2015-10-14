@@ -5,8 +5,8 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 public class Percolation {
 	private final int TOP = 0, BOTTOM;
 	private int[] matrix;
-	private 	int N;
-	private 	WeightedQuickUnionUF uf;
+	private int N;
+	private WeightedQuickUnionUF uf;
 
 	public Percolation(int N) {
 		if (N <= 0)
@@ -21,9 +21,11 @@ public class Percolation {
 	}
 
 	public void open(int i, int j) {
-		if(isOpen(i, j))
+		if (isOpen(i, j))
 			return;
-		if (i >= N || j >= N)
+		i -= 1;
+		j -= 1;
+		if (i >= N || j >= N || i < 0 || j < 0)
 			throw new IndexOutOfBoundsException();
 		int index = two2OneDimension(i, j);
 		matrix[index] = 1;
@@ -42,13 +44,17 @@ public class Percolation {
 	}
 
 	public boolean isOpen(int i, int j) {
-		if (i >= N || j >= N)
+		i -= 1;
+		j -= 1;
+		if (i >= N || j >= N || i < 0 || j < 0)
 			throw new IndexOutOfBoundsException();
 		return matrix[two2OneDimension(i, j)] == 1;
 	}
 
 	public boolean isFull(int i, int j) {
-		if (i >= N || j >= N)
+		i -= 1;
+		j -= 1;
+		if (i >= N || j >= N || i < 0 || j < 0)
 			throw new IndexOutOfBoundsException();
 		return uf.connected(two2OneDimension(i, j), TOP);
 	}
