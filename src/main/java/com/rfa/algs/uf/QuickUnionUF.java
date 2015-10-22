@@ -1,4 +1,4 @@
-package com.rfa.algs.exercises.uf;
+package com.rfa.algs.uf;
 
 import java.util.Arrays;
 
