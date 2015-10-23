@@ -1,47 +1,48 @@
 package com.rfa.algs.sorting.pq;
 
-public class MaxPQ<Key extends Comparable<Key>> implements PriorityQueue<Key> {
+public class MaxPQ<Key extends Comparable<Key>> extends BasePQ<Key> {
 
 	public MaxPQ() {
-
+		this(MAX_PQ_SIZE);
 	}
 
+	@SuppressWarnings("unchecked")
 	public MaxPQ(int max) {
-
+		pq = (Key[]) new Comparable[max];
 	}
 
 	public MaxPQ(Key[] a) {
-
+		pq = a;
 	}
 
 	@Override
 	public void insert(Key k) {
-		// TODO Auto-generated method stub
-
+		pq[++N] = k;
+		swim(N);
 	}
 
 	@Override
 	public Key max() {
-		// TODO Auto-generated method stub
-		return null;
+		return pq[1];
 	}
 
 	@Override
 	public Key delMax() {
-		// TODO Auto-generated method stub
-		return null;
+		Key key = pq[1];
+		exch(1, N--);
+		pq[N+1] = null;
+		sink(1);
+		return key;
 	}
 
 	@Override
 	public boolean isEmpty() {
-		// TODO Auto-generated method stub
-		return false;
+		return N == 0;
 	}
 
 	@Override
 	public int size() {
-		// TODO Auto-generated method stub
-		return 0;
+		return N;
 	}
 
 }
