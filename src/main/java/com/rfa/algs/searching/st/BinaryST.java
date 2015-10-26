@@ -1,20 +1,21 @@
 package com.rfa.algs.searching.st;
 
 import com.rfa.algs.structures.Queue;
+import com.rfa.algs.structures.tree.AbstractNode;
 import com.rfa.algs.structures.tree.Node;
 
 import edu.princeton.cs.algs4.StdOut;
 
 public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Value> implements PrintableTree {
 
-	private Node<Key, Value> root;
+	private AbstractNode<Key, Value> root;
 
 	@Override
 	public void put(Key key, Value val) {
 		root = put(root, key, val);
 	}
 
-	public Node<Key, Value> put(Node<Key, Value> node, Key key, Value val) {
+	public AbstractNode<Key, Value> put(AbstractNode<Key, Value> node, Key key, Value val) {
 		if (node == null)
 			return new Node<>(key, val);
 		int cmp = key.compareTo(node.getKey());
@@ -33,7 +34,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 		return get(root, key);
 	}
 
-	private Value get(Node<Key, Value> node, Key key) {
+	private Value get(AbstractNode<Key, Value> node, Key key) {
 		if (node == null)
 			return null;
 		int cmp = key.compareTo(node.getKey());
@@ -45,7 +46,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 			return node.getValue();
 	}
 
-	private Node<Key, Value> deleteMin(Node<Key, Value> x) {
+	private AbstractNode<Key, Value> deleteMin(AbstractNode<Key, Value> x) {
 		if (x.getLeft() == null)
 			return x.getRight();
 		x.setLeft(deleteMin(x.getLeft()));
@@ -58,7 +59,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 		root = delete(root, key);
 	}
 
-	private Node<Key, Value> delete(Node<Key, Value> node, Key key) {
+	private AbstractNode<Key, Value> delete(AbstractNode<Key, Value> node, Key key) {
 		if (node == null)
 			return null;
 		int cmp = key.compareTo(node.getKey());
@@ -71,8 +72,8 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 				return node.getLeft();
 			if (node.getLeft() == null)
 				return node.getRight();
-			Node<Key, Value> t = node;
-			node = (Node<Key, Value>) min(t.getRight());
+			AbstractNode<Key, Value> t = node;
+			node = (AbstractNode<Key, Value>) min(t.getRight());
 			node.setRight(deleteMin(t.getRight()));
 			node.setLeft(t.getLeft());
 		}
@@ -97,7 +98,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 		return size(root);
 	}
 
-	private int size(Node<Key, Value> x) {
+	private int size(AbstractNode<Key, Value> x) {
 		if (x == null)
 			return 0;
 		else
@@ -106,13 +107,13 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 
 	@Override
 	public Key min() {
-		Node<Key, Value> min = min(root);
+		AbstractNode<Key, Value> min = min(root);
 		if (min == null)
 			return null;
 		return min.getKey();
 	}
 
-	public Node<Key, Value> min(Node<Key, Value> node) {
+	public AbstractNode<Key, Value> min(AbstractNode<Key, Value> node) {
 		if (node == null)
 			return null;
 		else if (node.getLeft() == null)
@@ -126,7 +127,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 		return max(root);
 	}
 
-	public Key max(Node<Key, Value> node) {
+	public Key max(AbstractNode<Key, Value> node) {
 		if (node == null)
 			return null;
 		else if (node.getRight() == null)
@@ -137,13 +138,13 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 
 	@Override
 	public Key floor(Key key) {
-		Node<Key, Value> floor = floor(root, key);
+		AbstractNode<Key, Value> floor = floor(root, key);
 		if (floor == null)
 			return null;
 		return floor.getKey();
 	}
 
-	private Node<Key, Value> floor(Node<Key, Value> node, Key key) {
+	private AbstractNode<Key, Value> floor(AbstractNode<Key, Value> node, Key key) {
 		if (node == null)
 			return null;
 		int cmp = key.compareTo(node.getKey());
@@ -151,7 +152,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 			return node;
 		else if (cmp < 0)
 			return floor(node.getLeft(), key);
-		Node<Key, Value> rightFloor = floor(node.getRight(), key);
+		AbstractNode<Key, Value> rightFloor = floor(node.getRight(), key);
 		if (rightFloor != null)
 			return rightFloor;
 		else
@@ -160,13 +161,13 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 
 	@Override
 	public Key ceiling(Key key) {
-		Node<Key, Value> ceiling = ceiling(root, key);
+		AbstractNode<Key, Value> ceiling = ceiling(root, key);
 		if (ceiling == null)
 			return null;
 		return ceiling.getKey();
 	}
 
-	private Node<Key, Value> ceiling(Node<Key, Value> node, Key key) {
+	private AbstractNode<Key, Value> ceiling(AbstractNode<Key, Value> node, Key key) {
 		if (node == null)
 			return null;
 		int cmp = key.compareTo(node.getKey());
@@ -174,7 +175,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 			return node;
 		else if (cmp > 0)
 			return ceiling(node.getRight(), key);
-		Node<Key, Value> leftFloor = ceiling(node.getLeft(), key);
+		AbstractNode<Key, Value> leftFloor = ceiling(node.getLeft(), key);
 		if (leftFloor != null)
 			return leftFloor;
 		else
@@ -186,7 +187,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 		return rank(root, key);
 	}
 
-	private int rank(Node<Key, Value> node, Key key) {
+	private int rank(AbstractNode<Key, Value> node, Key key) {
 		if (node == null)
 			return 0;
 		int cmp = key.compareTo(node.getKey());
@@ -200,13 +201,13 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 
 	@Override
 	public Key select(int k) {
-		Node<Key, Value> select = select(root, k);
+		AbstractNode<Key, Value> select = select(root, k);
 		if (select == null)
 			return null;
 		return select.getKey();
 	}
 
-	private Node<Key, Value> select(Node<Key, Value> node, int k) {
+	private AbstractNode<Key, Value> select(AbstractNode<Key, Value> node, int k) {
 		if (node == null)
 			return null;
 		int s = size(node.getLeft());
@@ -225,7 +226,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 		return queue;
 	}
 
-	private void keys(Node<Key, Value> node, Queue<Key> queue, Key lo, Key hi) {
+	private void keys(AbstractNode<Key, Value> node, Queue<Key> queue, Key lo, Key hi) {
 		if (node == null)
 			return;
 		int cmplo = lo.compareTo(node.getKey());
@@ -243,7 +244,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 		printInorder(root);
 	}
 
-	public void printInorder(Node<Key, Value> node) {
+	public void printInorder(AbstractNode<Key, Value> node) {
 		if (node == null)
 			return;
 		printInorder(node.getLeft());
@@ -257,7 +258,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 		printPreorder(root);
 	}
 
-	public void printPreorder(Node<Key, Value> node) {
+	public void printPreorder(AbstractNode<Key, Value> node) {
 		if (node == null)
 			return;
 		StdOut.println(node.getKey() + ": " + node.getValue());
@@ -271,7 +272,7 @@ public class BinaryST<Key extends Comparable<Key>, Value> extends BaseST<Key, Va
 		printPostorder(root);
 	}
 
-	public void printPostorder(Node<Key, Value> node) {
+	public void printPostorder(AbstractNode<Key, Value> node) {
 		if (node == null)
 			return;
 		printPostorder(node.getLeft());
