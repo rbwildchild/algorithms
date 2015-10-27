@@ -27,19 +27,16 @@ public class DepthFirstCC implements CC {
 
 	@Override
 	public boolean connected(int v, int w) {
-		// TODO Auto-generated method stub
-		return false;
+		return id[v] == id[w];
 	}
 
 	@Override
 	public int count() {
-		// TODO Auto-generated method stub
-		return 0;
+		return count;
 	}
 
 	@Override
 	public int id(int v) {
-		// TODO Auto-generated method stub
-		return 0;
+		return id[v];
 	}
 }
